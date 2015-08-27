@@ -25,20 +25,25 @@ from ..objects.exceptions import NotInitializedError, InvalidSyntaxError, \
 LOG = minimal_logger(__name__)
 
 _marker = object()
+_selected_app = None
 
 def get_application_name(default=_marker):
+    global _selected_app
     try:
         result = fileoperations.get_config_setting('global', 'application_name')
     except NotInitializedError:
         result = _get_application_name_interactive()
 
     if result is not None:
+        _selected_app = result
         return result
 
     # get_config_setting should throw error if directory is not set up
     LOG.debug('Directory found, but no config or app name exists')
     if default is _marker:
         raise NotInitializedError
+
+    _selected_app = default
     return default
 
 
@@ -57,8 +62,8 @@ def _get_application_name_interactive():
 
     return app_name
 
-def get_environment_name(app):
-    environments = [env.name for env in elasticbeanstalk.get_app_environments(app)]
+def get_environment_name():
+    environments = [env.name for env in elasticbeanstalk.get_app_environments(_selected_app)]
     io.echo()
     io.echo('Select an environment to use')
     return utils.prompt_for_item_in_list(environments)

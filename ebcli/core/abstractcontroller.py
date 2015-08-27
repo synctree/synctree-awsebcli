@@ -67,7 +67,7 @@ class AbstractBaseController(controller.CementBaseController):
         app_name = helperoperations.get_application_name()
         return app_name
 
-    def get_env_name(self, cmd_example=None, noerror=False, varname=None, appname=None):
+    def get_env_name(self, cmd_example=None, noerror=False, varname=None):
         try:
             if varname:
                 env_name = getattr(self.app.pargs, varname)
@@ -78,7 +78,7 @@ class AbstractBaseController(controller.CementBaseController):
                 env_name = commonops. \
                     get_current_branch_environment()
         except NotInitializedError:
-            return helperoperations.get_environment_name(appname)
+            return helperoperations.get_environment_name()
 
         if not env_name:
             # No default env, lets ask for one
