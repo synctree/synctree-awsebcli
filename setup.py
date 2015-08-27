@@ -63,7 +63,7 @@ setup_options = dict(
     ),
     entry_points={
         'console_scripts': [
-            'eb=ebcli.core.ebcore:main'
+            'ebx=ebcli.core.ebcore:main'
         ]
     }
 )
