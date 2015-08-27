@@ -155,7 +155,10 @@ def _get_botocore_session():
         session = botocore.session.get_session({
             'profile': (None, _profile_env_var, _profile, None),
         })
-        session.set_config_variable('region', _region_name)
+
+        if not session.get_config_variable('region'):
+          session.set_config_variable('region', _region_name)
+
         session.register_component('data_loader', _get_data_loader())
         _set_user_agent_for_session(session)
         _get_botocore_session.botocore_session = session
