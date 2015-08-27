@@ -235,3 +235,13 @@ For example:
 Now whenever you switch to a new branch, your default environment will also switch.
 
 
+Hacking
+---
+
+Setup instructions:
+`python setup.py build`
+`python setup.py develop`
+`python setup.py develop # yes, you have to run it twice. patches welcome`
+`ebx --help`
+
+Each command has a `controller`, and puts the "business" logic in a corresponding `*ops` file in `operations`.
