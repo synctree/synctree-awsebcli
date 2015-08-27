@@ -18,7 +18,7 @@ except ImportError:
 
 from ..core import io, fileoperations
 from ..operations import commonops
-from ..lib import utils
+from ..lib import utils, elasticbeanstalk
 from ..objects.exceptions import NotInitializedError, InvalidSyntaxError, \
     NotFoundError
 
@@ -56,3 +56,9 @@ def _get_application_name_interactive():
         app_name = utils.prompt_for_item_in_list(app_list, default=default_option)
 
     return app_name
+
+def get_environment_name(app):
+    environments = [env.name for env in elasticbeanstalk.get_app_environments(app)]
+    io.echo()
+    io.echo('Select an environment to use')
+    return utils.prompt_for_item_in_list(environments)
