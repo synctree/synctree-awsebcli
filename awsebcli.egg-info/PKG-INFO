@@ -248,6 +248,12 @@ Description: ======
         =========
         
         ------------------
+        3.5.2-synctree (dev)
+        ------------------
+         - Fall back to app/env prompt for all commands when there is no local configuration
+         - Respect region specified in AWS profile when no other region is supplied
+        
+        ------------------
         3.5.2 (2015-08-26)
         ------------------
         - Fix bug in "eb health" command preventing it from running.
