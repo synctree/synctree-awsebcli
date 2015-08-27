@@ -18,7 +18,7 @@ from cement.core import controller
 
 from ebcli import __version__
 from ..lib import utils
-from ..core import io, fileoperations
+from ..core import io, fileoperations, helperoperations
 from ..objects.exceptions import NoEnvironmentForBranchError
 from ..resources.strings import strings, flag_text
 from ..objects import region
@@ -64,7 +64,7 @@ class AbstractBaseController(controller.CementBaseController):
                 io.log_alert(strings['base.update_available'])
 
     def get_app_name(self):
-        app_name = fileoperations.get_application_name()
+        app_name = helperoperations.get_application_name()
         return app_name
 
     def get_env_name(self, cmd_example=None, noerror=False, varname=None):

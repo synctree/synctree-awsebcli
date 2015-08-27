@@ -89,6 +89,7 @@ ebcli/core/completer.py
 ebcli/core/ebcore.py
 ebcli/core/ebglobals.py
 ebcli/core/fileoperations.py
+ebcli/core/helperoperations.py
 ebcli/core/hooks.py
 ebcli/core/io.py
 ebcli/health/__init__.py
