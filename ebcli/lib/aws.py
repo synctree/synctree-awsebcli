@@ -156,7 +156,7 @@ def _get_botocore_session():
             'profile': (None, _profile_env_var, _profile, None),
         })
 
-        if not session.get_config_variable('region'):
+        if _region_name or not session.get_config_variable('region'):
           session.set_config_variable('region', _region_name)
 
         session.register_component('data_loader', _get_data_loader())
