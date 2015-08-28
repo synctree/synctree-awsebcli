@@ -37,6 +37,7 @@ class LogsController(AbstractBaseController):
         epilog = strings['logs.epilog']
 
     def do_command(self):
+        app_name = self.get_app_name()
         env_name = self.get_env_name()
         if self.app.pargs.stream:
             try:
