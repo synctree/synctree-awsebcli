@@ -16,7 +16,7 @@ import os
 from ..lib import elasticbeanstalk
 from ..core import io, fileoperations
 from ..objects import configuration
-from ..objects.exceptions import InvalidSyntaxError
+from ..objects.exceptions import InvalidSyntaxError, NotInitializedError
 from ..resources.strings import prompts
 from . import commonops
 
@@ -34,13 +34,22 @@ def update_environment_configuration(app_name, env_name, nohang,
 
     # Update and delete file
     try:
-        usr_model = fileoperations.get_environment_from_file(env_name)
+        try:
+            usr_model = fileoperations.get_environment_from_file(env_name)
+        except NotInitializedError:
+            usr_model = fileoperations.get_environment_from_path(file_location)
+
         changes, remove = configuration.collect_changes(api_model, usr_model)
         if api_model['SolutionStackName'] != usr_model['SolutionStackName']:
             solution_name = usr_model['SolutionStackName']
         else:
             solution_name = None
-        fileoperations.delete_env_file(env_name)
+
+        try:
+            fileoperations.delete_env_file(env_name)
+        except NotInitializedError:
+            pass
+
     except InvalidSyntaxError:
         io.log_error(prompts['update.invalidsyntax'])
         return

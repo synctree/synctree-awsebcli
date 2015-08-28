@@ -18,6 +18,7 @@ import os
 import shutil
 import stat
 import sys
+import tempfile
 import zipfile
 
 from botocore.compat import six
@@ -439,7 +440,12 @@ def delete_env_file(env_name):
 
 
 def get_editor():
-    editor = get_config_setting('global', 'editor')
+    editor = None
+    try:
+        editor = get_config_setting('global', 'editor')
+    except NotInitializedError:
+        pass
+
     if not editor:
         editor = os.getenv('EDITOR')
     if not editor:
@@ -461,6 +467,7 @@ def save_env_file(env):
 
     file_name = beanstalk_directory + file_name
     try:
+
         _traverse_to_project_root()
 
         file_name = os.path.abspath(file_name)
@@ -469,10 +476,28 @@ def save_env_file(env):
             f.write(safe_dump(env, default_flow_style=False,
                               line_break=os.linesep))
 
+    except NotInitializedError:
+        _, file_name = tempfile.mkstemp('.env.yml')
+        with codecs.open(file_name, 'w', encoding='utf8') as f:
+            f.write(safe_dump(env, default_flow_style=False,
+                              line_break=os.linesep))
+
     finally:
         os.chdir(cwd)
 
     return file_name
+
+
+def get_environment_from_path(path):
+    try:
+        if os.path.exists(path):
+            with codecs.open(path, 'r', encoding='utf8') as f:
+                env = load(f)
+    except (ScannerError, ParserError):
+        raise InvalidSyntaxError('The environment file contains '
+                                 'invalid syntax.')
+
+    return env
 
 
 def get_environment_from_file(env_name):
