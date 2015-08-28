@@ -149,6 +149,7 @@ def _get_client(service_name):
 
 @static_var('botocore_session', None)
 def _get_botocore_session():
+    global _region_name
     if _get_botocore_session.botocore_session is None:
         LOG.debug('Creating new Botocore Session')
         LOG.debug('Botocore version: {0}'.format(botocore.__version__))
@@ -158,6 +159,8 @@ def _get_botocore_session():
 
         if _region_name or not session.get_config_variable('region'):
           session.set_config_variable('region', _region_name)
+
+        _region_name = session.get_config_variable('region')
 
         session.register_component('data_loader', _get_data_loader())
         _set_user_agent_for_session(session)
