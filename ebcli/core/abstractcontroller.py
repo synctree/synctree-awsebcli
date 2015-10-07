@@ -18,8 +18,8 @@ from cement.core import controller
 
 from ebcli import __version__
 from ..lib import utils
-from ..core import io, fileoperations
-from ..objects.exceptions import NoEnvironmentForBranchError
+from ..core import io, fileoperations, helperoperations
+from ..objects.exceptions import NoEnvironmentForBranchError, NotInitializedError
 from ..resources.strings import strings, flag_text
 from ..objects import region
 from ..operations import commonops
@@ -64,21 +64,25 @@ class AbstractBaseController(controller.CementBaseController):
                 io.log_alert(strings['base.update_available'])
 
     def get_app_name(self):
-        app_name = fileoperations.get_application_name()
+        app_name = helperoperations.get_application_name()
         return app_name
 
     def get_env_name(self, cmd_example=None, noerror=False, varname=None):
-        if varname:
-            env_name = getattr(self.app.pargs, varname)
-        else:
-            env_name = self.app.pargs.environment_name
-        if not env_name:
-            # If env name not provided, grab branch default
-            env_name = commonops. \
-                get_current_branch_environment()
+        try:
+            if varname:
+                env_name = getattr(self.app.pargs, varname)
+            else:
+                env_name = self.app.pargs.environment_name
+            if not env_name:
+                # If env name not provided, grab branch default
+                env_name = commonops. \
+                    get_current_branch_environment()
+        except NotInitializedError:
+            return helperoperations.get_environment_name()
 
         if not env_name:
             # No default env, lets ask for one
+
             if noerror:
                 return None
 

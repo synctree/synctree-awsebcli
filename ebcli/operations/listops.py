@@ -12,6 +12,7 @@
 # language governing permissions and limitations under the License.
 
 from ..lib import aws, utils
+from ..objects.exceptions import NotInitializedError
 from ..core import io
 from . import commonops
 
@@ -30,7 +31,11 @@ def list_env_names(app_name, verbose, all_apps):
 
 
 def list_env_names_for_app(app_name, verbose):
-    current_env = commonops.get_current_branch_environment()
+    try:
+        current_env = commonops.get_current_branch_environment()
+    except NotInitializedError, e:
+        current_env = None
+
     env_names = commonops.get_env_names(app_name)
     env_names.sort()
 

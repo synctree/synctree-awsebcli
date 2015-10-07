@@ -33,6 +33,7 @@ LOG = minimal_logger(__name__)
 
 
 def prompt_for_item_in_list(lst, default=1):
+    lst.sort()
     ind = prompt_for_index_in_list(lst, default)
     return lst[ind]
 

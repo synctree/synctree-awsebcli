@@ -62,7 +62,7 @@ def do_install(version=None):
         else:
             version = ''
         # run_cmd('bash -c source ~/.ebvenv/bin/activate')
-        run_cmd('~/.ebvenv/bin/pip install -U awsebcli{0}'.format(version))
+        run_cmd('~/.ebvenv/bin/pip install -U synctree-awsebcli{0}'.format(version))
         # run_cmd('deactivate')
 
         # Check install

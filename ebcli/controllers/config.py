@@ -40,8 +40,8 @@ class ConfigController(AbstractBaseController):
         epilog = strings['config.epilog']
 
     def do_command(self):
-        env_name = self.get_env_name(varname='name')
         app_name = self.get_app_name()
+        env_name = self.get_env_name(varname='name')
         timeout = self.app.pargs.timeout
         nohang = self.app.pargs.nohang
         cfg = self.app.pargs.cfg

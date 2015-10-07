@@ -33,7 +33,7 @@ except:
     data_files = []
 
 setup_options = dict(
-    name='awsebcli',
+    name='synctree-awsebcli',
     version=ebcli.__version__,
     description='Command Line Interface for AWS EB.',
     long_description=open('README.rst').read() + open('CHANGES.rst').read(),
@@ -63,7 +63,7 @@ setup_options = dict(
     ),
     entry_points={
         'console_scripts': [
-            'eb=ebcli.core.ebcore:main'
+            'ebx=ebcli.core.ebcore:main'
         ]
     }
 )

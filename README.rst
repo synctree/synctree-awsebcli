@@ -233,5 +233,3 @@ For example:
     eb use dev
 
 Now whenever you switch to a new branch, your default environment will also switch.
-
-
