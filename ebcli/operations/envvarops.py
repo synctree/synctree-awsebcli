@@ -11,7 +11,7 @@
 # ANY KIND, either express or implied. See the License for the specific
 # language governing permissions and limitations under the License.
 
-
+import collections
 from botocore.compat import six
 from six import iteritems
 
@@ -34,7 +34,8 @@ def get_and_print_environment_vars(app_name, env_name):
 
 def print_environment_vars(vars):
     io.echo(' Environment Variables:')
-    for key, value in iteritems(vars):
+    sorted_vars = collections.OrderedDict(sorted(vars.items()))
+    for key, value in iteritems(sorted_vars):
         key, value = utils.mask_vars(key, value)
         io.echo('    ', key, '=', value)
 
