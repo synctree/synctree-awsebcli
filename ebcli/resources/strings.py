@@ -110,7 +110,7 @@ strings = {
     'timeout.error': 'The operation timed out. The state of the environment is unknown.',
     'sc.notfound': 'Git is not set up for this project. EB CLI will deploy a .zip file of the entire directory.',
     'exit.notsetup': 'This directory has not been set up with the EB CLI\n'
-                     'You must first run "eb init".',
+                     'You must first run "ebx init".',
     'exit.noregion': 'The EB CLI cannot find a default region. Run "eb init" or use a specific region by including the "--region" option with the command.',
     # Typical response when an environment is in pending state
     'exit.invalidstate': 'The operation cannot be completed at this time due to a pending operation. Try again later.',

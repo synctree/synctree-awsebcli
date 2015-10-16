@@ -63,8 +63,8 @@ class AbstractBaseController(controller.CementBaseController):
             if cli_update_exists(version):
                 io.log_alert(strings['base.update_available'])
 
-    def get_app_name(self):
-        app_name = helperoperations.get_application_name()
+    def get_app_name(self, prompt=True):
+        app_name = helperoperations.get_application_name(prompt=prompt)
         return app_name
 
     def get_env_name(self, cmd_example=None, noerror=False, varname=None):

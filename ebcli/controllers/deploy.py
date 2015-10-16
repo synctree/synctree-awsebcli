@@ -40,7 +40,7 @@ class DeployController(AbstractBaseController):
         usage = AbstractBaseController.Meta.usage.replace('{cmd}', label)
 
     def do_command(self):
-        app_name = self.get_app_name()
+        app_name = self.get_app_name(prompt=False)
         env_name = self.app.pargs.environment_name
         version = self.app.pargs.version
         label = self.app.pargs.label

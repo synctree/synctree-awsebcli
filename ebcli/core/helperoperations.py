@@ -27,12 +27,14 @@ LOG = minimal_logger(__name__)
 _marker = object()
 _selected_app = None
 
-def get_application_name(default=_marker):
+def get_application_name(default=_marker, prompt=True):
     global _selected_app
+    result = None
     try:
         result = fileoperations.get_config_setting('global', 'application_name')
     except NotInitializedError:
-        result = _get_application_name_interactive()
+        if prompt:
+            result = _get_application_name_interactive()
 
     if result is not None:
         _selected_app = result
